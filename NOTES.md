@@ -15,7 +15,8 @@ Phases 1 and 2 are done; steps and results in [README.md](README.md). stories110
 7.9 tok/s with matmul on the FPGA (kernel at 142.86 MHz, ~80% of one HP port).
 Phase 3 is done: Qwen2.5-Coder-0.5B-Instruct runs at 3.7 tok/s on the FPGA (2.0 on the CPU), 65,536-token head
 (99.0% of the model's own answers), CMA 320 MB via `/boot/uEnv.txt`, optional 1602A LCD output.
-LCD output is built and runs without errors but was not yet checked on a wired display.
+LCD output verified on the wired 1602A (2026-10-26): line 1 shows the answer's last 16 characters, line 2 tok/s.
+Wiring lesson: the contrast pot's middle leg goes only to LCD V0; a wiper on a supply rail shorted the board's power.
 Next levers: a second weight port (HP2) for ~1.5 GB/s; prompt processing in batches instead of token by token.
 
 ## Decisions

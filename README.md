@@ -135,7 +135,7 @@ partition to undo). The weights take 263 MB of it in 8 MiB chunks.
 |---|---|
 | 1 VSS, 5 RW, 16 K | GND (6, 14) — RW must be on GND so the 5 V LCD never drives the 3.3 V FPGA pins |
 | 2 VDD, 15 A | 5 V (2, 4) |
-| 3 V0 | 10 kΩ pot wiper between 5 V and GND (or ~1 kΩ to GND) |
+| 3 V0 | Middle leg of a 10 kΩ pot whose outer legs go to 3.3 V (pin 1) and GND (pin 20); the middle leg goes nowhere else |
 | 4 RS, 6 E | 11, 13 |
 | 11–14 D4–D7 | 15, 16, 18, 22 |
 
