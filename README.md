@@ -82,19 +82,14 @@ MACs.
 
 ```mermaid
 flowchart LR
-    subgraph PS["Processing system: 2x Cortex-A9, Linux"]
-        A["tokenizer, attention, RoPE,<br/>RMSNorm, sampling"]
-    end
-    subgraph PL["Programmable logic: matvec kernel, 142.86 MHz"]
-        K["int4 / int8 weights x int8 activations<br/>16 MACs per clock"]
-        G["AXI GPIO"]
-    end
-    D[("DDR3, 512 MB<br/>320 MB CMA holds the weights")]
+    A["<b>ARM cores</b> (Linux)<br/>tokenizer, attention, RoPE,<br/>RMSNorm, sampling"]
+    K["<b>matvec kernel</b> (PL, 142.86 MHz)<br/>16 int4 MACs per clock"]
+    D[("<b>DDR3</b><br/>weights in a 320 MB CMA pool")]
     L["1602A LCD"]
     A -- "AXI-Lite: shapes, start" --> K
-    D == "HP0: weights, one 64-bit word per clock" ==> K
+    A -- "AXI GPIO" --> L
+    D == "HP0: weights, 64 bit per clock" ==> K
     D <-- "HP1: scales, activations, results" --> K
-    A -- "writes" --> G --> L
 ```
 
 - **ARM cores** run Linux, the byte-level BPE tokenizer, RoPE, attention over the KV cache, RMSNorm, SwiGLU and the
