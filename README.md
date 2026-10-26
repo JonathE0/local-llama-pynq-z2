@@ -85,6 +85,47 @@ Results (2026-10-26, kernel at 142.86 MHz, `-t 0 -n 256`, same prompt as phase 1
 - stories110M now reads ~920 MB/s of weights, ~80% of what one 64-bit port can move at 142.86 MHz. The next lever is
   a second weight port (HP2), toward the DDR's ~1.5 GB/s practical limit.
 
+## Phase 3: Qwen2.5-Coder-0.5B-Instruct (in progress)
+
+Done so far, all on the PC: model choice, 4-bit quantization, output-head token set, and the board weight file.
+Still to do: a bigger CMA pool on the board, a 4-bit kernel, Qwen inference code in C, and the tokenizer.
+
+**Quality** (llama-perplexity, context 512, lower is better; code = held-out Python stdlib, English = wikitext-2):
+
+| Model | Code F16 | Code 4-bit | English F16 | English 4-bit |
+|---|---|---|---|---|
+| Qwen2.5-0.5B-Instruct | 4.273 | 4.554 (+6.6%) | 15.79 | 17.46 (+10.6%) |
+| **Qwen2.5-Coder-0.5B-Instruct** | 4.202 | **4.428 (+5.4%)** | 34.76 | 37.89 (+9.0%) |
+
+- 4-bit = `Q4_0` (group 32, fp16 scale) with an importance matrix, tied embedding/output head at `Q8_0`. Plain `Q4_0`
+  without the imatrix was +6.3% (Coder) / +10.7% (Instruct) on code; the `Q8_0` head adds ~1 point of quality for
+  ~15 MB more traffic per token.
+- Both models handled FizzBuzz, palindromes and merging sorted lists; both wrote a buggy `key=value` parser.
+- The official GGUFs store the tied head twice (`output.weight` = `token_embd.weight`); `tools/gguf_tie.py` drops the
+  copy and `tools/imatrix_tie.py` moves its imatrix stats to `token_embd`.
+
+**Output head:** logits only for the 49,152 most frequent tokens (plus all special and byte tokens; the exact set is
+[qwen/head_tokens_49152.npy](qwen/head_tokens_49152.npy), made by `tools/qwen_head_tokens.py 49152`), covering 99.1% of
+held-out English, 98.8% of Python and 97.9% of C tokens (32,768 would cover 97.2 / 97.3 / 95.6%). Per token the board
+reads ~201 MB of 4-bit layer weights plus ~47 MB of head, so ~250 MB must fit in CMA.
+
+**Board weight file** (`.qwb`, 375 MiB; layout in [tools/gguf2qwb.py](tools/gguf2qwb.py)): 4-bit matrices as packed
+int4 + fp16 scales, the head and full embedding table at int8 + fp16 scales. `tools/qwb_check.py` walks the file the
+way the board loader must and checks it against the GGUF.
+
+Pipeline (PC; llama.cpp `b11889` Windows CPU build in `vendor/llama.cpp/`, venv with `numpy gguf tokenizers`):
+
+```bash
+curl -L -o models/qwen/qwen2.5-coder-0.5b-instruct-fp16.gguf https://huggingface.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF/resolve/main/qwen2.5-coder-0.5b-instruct-fp16.gguf
+py -3 -I tools/qwen_calib_data.py
+vendor/llama.cpp/llama-imatrix -m models/qwen/qwen2.5-coder-0.5b-instruct-fp16.gguf -f models/data/code/calib_mix.txt -o models/qwen/imatrix-coder.gguf -c 512 --process-output --no-ppl
+.venv/Scripts/python tools/gguf_tie.py models/qwen/qwen2.5-coder-0.5b-instruct-fp16.gguf models/qwen/coder-fp16-tied.gguf
+.venv/Scripts/python tools/imatrix_tie.py models/qwen/imatrix-coder.gguf models/qwen/imatrix-coder-tied.gguf
+vendor/llama.cpp/llama-quantize --pure --imatrix models/qwen/imatrix-coder-tied.gguf --token-embedding-type q8_0 models/qwen/coder-fp16-tied.gguf models/qwen/coder-q4.gguf Q4_0
+.venv/Scripts/python tools/gguf2qwb.py models/qwen/coder-q4.gguf qwen/head_tokens_49152.npy models/qwen/coder-q4.qwb
+.venv/Scripts/python tools/qwb_check.py models/qwen/coder-q4.gguf models/qwen/coder-q4.qwb
+```
+
 ## Board access
 
 - The board's Ethernet goes to the laptop's USB Ethernet adapter ("Ethernet 2"), with Windows Internet Connection

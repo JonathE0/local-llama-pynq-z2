@@ -1,5 +1,7 @@
 llama2.c/
 models/
+vendor/
+.venv/
 hls/build/
 vivado/build/
 .Xil/
