@@ -11,8 +11,9 @@ tok/s ≈ bandwidth / bytes of weights read per token.
    Attention, softmax, RMSNorm and sampling stay on the ARM. Target for stories110M: 6–8 tok/s (ceiling ~10).
 3. **Qwen2.5-0.5B-Instruct** at 4-bit (or a newer small model; pick after comparing perplexity on the PC).
 
-Milestone 1 deliverables (not started): one HLS kernel source, one C-sim testbench checking the kernel against
-the CPU result, a small C driver called from `runq.c`, README with board and Vivado steps.
+Phase 1 is done: steps and results in [README.md](README.md) (stories15M 18.5 tok/s, stories110M 3.2 tok/s).
+Phase 2 deliverables (not started): one HLS kernel source, one C-sim testbench checking the kernel against
+the CPU result, a small C driver called from `runq.c`, README steps for Vivado and loading the bitstream.
 
 ## Decisions
 - Phase 3 format: llama.cpp `Q4_0` (symmetric 4-bit, group 32, fp16 scale), quantized with
@@ -27,12 +28,7 @@ the CPU result, a small C driver called from `runq.c`, README with board and Viv
 - Vivado/Vitis 2025.2 works with the stock PYNQ image; only rebuilding the image needs a matching version.
 
 ## Setup status (2026-10-26)
-- Board boots from a 32 GB card with the PYNQ-Z2 v3.1.1 image (confirm: `lsb_release -ds` → Ubuntu 22.04).
-- Board is cabled to the **desktop PC** (USB + Ethernet straight into the desktop).
-- Desktop USB serial shows "USB Serial Port" with Code 28: install FTDI's VCP driver
-  (ftdichip.com → Drivers → VCP → Windows setup executable), then replug. Console is 115200 baud.
-- Network, pick one:
-  - Board into the router: gets internet, reachable from any PC as `ssh xilinx@pynq`.
-  - Internet Connection Sharing on the desktop: Wi-Fi → Properties → Sharing → share to Ethernet; leave the
-    Ethernet IPv4 on automatic. Board gets a `192.168.137.x` address (`arp -a` to find it).
-- Vivado 2025.2 + Vitis are installed on the HP ENVY laptop (`C:\AMDDesignTools\2025.2`); check the desktop.
+- Board: PYNQ image on Ubuntu 22.04 (`PynqLinux`), 32 GB card, 491 MB RAM visible to Linux, gcc 11.2.
+- Board is cabled to the HP ENVY laptop; access details in [README.md](README.md#board-access).
+- Vivado 2025.2 + Vitis are installed on the laptop (`C:\AMDDesignTools\2025.2`).
+- Board clock is wrong (no internet, no NTP); harmless so far.
