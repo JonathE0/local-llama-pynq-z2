@@ -1,6 +1,6 @@
-# local-ai-fpga
+# local-llama-pynq-z2
 
-Small LLMs on a PYNQ-Z2. Plan and design decisions: [NOTES.md](NOTES.md).
+Small Llama-architecture LLMs (llama2.c TinyStories) running on a PYNQ-Z2, with matmul on the FPGA. Plan and design decisions: [NOTES.md](NOTES.md).
 
 ## Phase 1: CPU baseline (llama2.c `runq`, int8)
 
