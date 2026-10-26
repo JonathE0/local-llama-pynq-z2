@@ -387,6 +387,11 @@ the driver is [qwen/lcd.c](qwen/lcd.c).
   models). The trimmed head can't produce rare identifier pieces and a few foreign-language word pieces.
 - **One FPGA program at a time**, and the board needs a PC for model preparation and for rebuilding the kernel.
 
+## License
+
+[MIT](LICENSE). It also carries Andrej Karpathy's llama2.c copyright notice, since `runq/runq.c` is derived from it.
+The Qwen model weights keep their own license (Apache-2.0).
+
 ## Credits
 
 - [llama2.c](https://github.com/karpathy/llama2.c) by Andrej Karpathy (MIT): the TinyStories inference code `runq` is
