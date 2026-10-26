@@ -1,4 +1,4 @@
-# local-llama-pynq-z2
+# pynq-z2-llm
 
 **A 4-bit Qwen2.5-Coder-0.5B coding assistant, plus llama2.c TinyStories models, running on a ~$150 PYNQ-Z2
 (Zynq-7020) with every matrix multiply on a custom Vitis HLS FPGA kernel.** Answers can be mirrored on a 16×2

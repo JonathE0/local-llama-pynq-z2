@@ -1,4 +1,4 @@
-# local-llama-pynq-z2 notes
+# pynq-z2-llm notes
 
 Goal: run a small LLM on a PYNQ-Z2 (Zynq-7020: 2x Cortex-A9 @ 650 MHz, 512 MB DDR3 shared with Linux,
 ~1.2 GB/s usable through one 64-bit AXI HP port, 220 DSP48, ~630 KB BRAM). Decoding is bandwidth bound:
