@@ -259,10 +259,12 @@ ssh pynq mkdir -p fpga/driver fpga/hls fpga/runq fpga/overlay
 scp driver/* pynq:fpga/driver/ && scp hls/xmatvec_hw.h pynq:fpga/hls/ && scp runq/* pynq:fpga/runq/ && scp overlay/* pynq:fpga/overlay/
 ssh pynq 'cd ~/fpga/runq && make'
 ssh pynq 'sudo bash ~/fpga/overlay/load.sh'
-ssh pynq 'cd ~/llama2.c && sudo ~/fpga/runq/runq-fpga stories110M_q80.bin -n 256 -i "Once upon a time"'
+ssh pynq 'cd ~/llama2.c && sudo ~/fpga/runq/runq-fpga stories15M_q80.bin -t 0 -n 256 -i "Once upon a time"'   # 50.7 tok/s
+ssh pynq 'cd ~/llama2.c && sudo ~/fpga/runq/runq-fpga stories110M_q80.bin -t 0 -n 256 -i "Once upon a time"'  # 7.9 tok/s
 ```
 
-- Load the overlay once per boot. It also sets the kernel clock to 142.86 MHz (closest to the 150 MHz Vivado timed;
+- Load the overlay once per boot, and again after running Qwen (one overlay at a time; `load.sh` records which one is
+  loaded so `chat` reloads the Qwen one). It also sets the kernel clock to 142.86 MHz (closest to the 150 MHz Vivado timed;
   loading alone leaves 125 MHz) and drops the page cache so stories110M's ~116 MB of weights fit the default 128 MiB
   CMA pool.
 - `FPGA_CHECK=1` recomputes every matmul on the CPU and prints the largest difference (slow).
