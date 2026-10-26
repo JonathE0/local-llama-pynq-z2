@@ -1,0 +1,514 @@
+Write a Python function that checks whether a string is a valid IPv4 address.
+Write a Python function to compute the nth Fibonacci number using memoization.
+Write a Python class for a stack with push, pop, peek and is_empty methods.
+Implement binary search in Python and return the index of the target or -1.
+Write a Python script that counts word frequencies in a text file and prints the top 10 words.
+Write a Python function that flattens an arbitrarily nested list.
+How do I read a CSV file into a list of dictionaries in Python?
+Write a Python decorator that times how long a function takes to run.
+Write a Python function to find all prime numbers up to n using the sieve of Eratosthenes.
+Show me how to use argparse to build a command line tool with a --verbose flag and a filename argument.
+Write a Python function that merges two dictionaries, summing values for keys that appear in both.
+Implement an LRU cache in Python using OrderedDict.
+Write a Python generator that yields the lines of a large file in chunks of 100 lines.
+Write a Python function that converts a Roman numeral to an integer.
+Create a Python dataclass for a 2D point with a method that returns the distance to another point.
+Write a Python function to check whether two strings are anagrams of each other.
+Write a Python function that returns the longest common prefix of a list of strings.
+How can I remove duplicates from a list while preserving order in Python?
+Write a Python script that downloads a web page with requests and prints all the links on it.
+Write a Python function to rotate a matrix 90 degrees clockwise.
+Write a Python function that validates an email address with a regular expression.
+Implement quicksort in Python.
+Implement merge sort in Python and explain its time complexity.
+Write a Python context manager that changes the working directory temporarily.
+Write a Python function that returns the n most common elements in a list.
+Write a Python function that computes the greatest common divisor of two numbers without using math.gcd.
+Write a Python program that simulates a simple bank account with deposit and withdraw methods and raises an exception on overdraft.
+Write a Python function to transpose a matrix represented as a list of lists.
+How do I sort a list of dictionaries by a key in Python?
+Write a Python function that parses an ISO 8601 date string and returns the day of the week.
+Write a Python function that reverses the words in a sentence but keeps the punctuation in place.
+Write a Python class that implements a singly linked list with append, delete and find.
+Write a Python function that checks whether a binary tree is balanced.
+Write a Python function to perform a breadth-first search on a graph stored as an adjacency list.
+Write Dijkstra's shortest path algorithm in Python using heapq.
+Write a pytest test file for a function add(a, b) that covers integers, floats and strings.
+Write a Python function that generates all permutations of a string.
+Write a Python function that generates all subsets of a set.
+Write a Python function that returns the median of a list of numbers.
+Write a Python script that renames all .txt files in a folder to .md.
+Write a Python function that encrypts text with a Caesar cipher and a function that decrypts it.
+Write a Python function that checks if a number is a perfect square without using floating point.
+Explain the difference between a list and a tuple in Python and give an example of each.
+Write a Python function to count the number of vowels in a string.
+Write a Python program that prints a multiplication table from 1 to 10.
+Write an asyncio program in Python that fetches three URLs concurrently with aiohttp.
+Write a Python function that safely parses JSON from a string and returns None on failure.
+Write a Python function that implements run-length encoding.
+Write a Python function that finds the two numbers in a list that add up to a target value.
+Write a Python function to compute the factorial of a number recursively and iteratively.
+Write a Python class Matrix with __add__ and __mul__ methods.
+How do I use list comprehensions with a condition in Python? Give three examples.
+Write a Python function that removes all HTML tags from a string.
+Write a Python function that checks whether parentheses in a string are balanced.
+Write a Python script using sqlite3 that creates a table of users and inserts three rows.
+Write a Flask app with a single route that returns JSON with the current time.
+Write a Python function that computes the Levenshtein distance between two strings.
+Write a Python function that finds the maximum subarray sum (Kadane's algorithm).
+Write a Python logging setup that writes INFO messages to a file and WARNING messages to the console.
+Write a Python function that returns True if a year is a leap year.
+Write a Python script that reads numbers from standard input until EOF and prints their mean and standard deviation.
+Write a Python function that converts a decimal number to binary without using bin().
+Write a Python function that chunks a list into pieces of size n.
+Using numpy, write a function that normalizes each column of a 2D array to zero mean and unit variance.
+Using pandas, show how to group a DataFrame by a column and compute the mean of another column.
+Write a Python function that deep-copies a nested dictionary without using the copy module.
+Write a Python thread-safe counter class using threading.Lock.
+Write a Python function that prints a Pascal's triangle with n rows.
+Write a Python program for a number guessing game.
+Write a Python function that finds the first non-repeating character in a string.
+Write a Python function that checks if a list is sorted in ascending order.
+Write a function in C that reverses a linked list.
+Write a C function that computes the length of a string without using strlen.
+Write a C program that prints the first 20 Fibonacci numbers.
+Write a C function that swaps two integers using pointers.
+Write a C program that reads a file and counts the number of lines in it.
+Implement a stack in C using a fixed-size array.
+Write a C function to compare two strings like strcmp.
+Write a C program that sorts an array of integers using bubble sort.
+Write a C function that returns the maximum element of an integer array.
+Write a C function that checks whether a number is prime.
+Implement a queue in C using a circular buffer.
+Write a C function that converts a string to an integer like atoi, handling a leading minus sign.
+Write a C program that allocates a 2D array dynamically and fills it with a multiplication table.
+Explain the difference between malloc and calloc in C.
+Write a C function that counts set bits in an unsigned 32-bit integer.
+Write a C struct for a student with name, age and gpa, and a function to print it.
+Write a C implementation of a hash table with separate chaining for string keys.
+Write a C function that copies a string into a buffer without overflowing it.
+Write a C program that converts a decimal number to hexadecimal.
+Write a C function that finds the middle element of a singly linked list.
+Write a C program that uses fork and waitpid to run a child process.
+Write a C function to implement binary search on a sorted array.
+Write a C macro that returns the minimum of two values and explain its pitfalls.
+Write a C program that reads three integers from the user and prints the largest.
+Write a C function that reverses the words in a sentence in place.
+Write a C program with a function pointer table for add, subtract, multiply and divide.
+Write a C program that prints the contents of a directory using opendir and readdir.
+Write a C function that checks if a string is a palindrome.
+Write a C program that implements the Euclidean algorithm for the greatest common divisor.
+Write a C function that rotates an array left by k positions.
+Write a C program that prints a right triangle of asterisks with n rows.
+Write a C program that creates a thread with pthreads and passes it an argument.
+Write a C function that implements memcpy for non-overlapping buffers.
+Write a C function to insert a node into a binary search tree.
+Write a C program that writes a struct to a binary file and reads it back.
+Write a C++ class for a 3D vector with operator+, operator- and a dot product.
+Write a C++ function template that returns the larger of two values.
+Write a C++ program that reads words from standard input and stores them in a std::map counting occurrences.
+Show me how to use std::vector and std::sort with a custom comparator in C++.
+Write a C++ class that manages a dynamic array with a constructor, destructor, copy constructor and copy assignment.
+Explain RAII in C++ with a short example using std::unique_ptr.
+Write a C++ program that reads a file line by line with std::ifstream and prints the longest line.
+Write a C++ function that reverses a std::string without using std::reverse.
+Write a C++ lambda that captures a counter by reference and increments it.
+Implement a generic stack class template in C++.
+Write a C++ program that finds the k-th largest element using std::priority_queue.
+Write a C++ function that checks whether a vector of ints is a palindrome.
+Write a C++ program that uses std::thread to compute the sum of two halves of a vector in parallel.
+Write a C++ class hierarchy with a Shape base class, virtual area(), and Circle and Rectangle subclasses.
+Write a C++ function that splits a string by a delimiter and returns a std::vector<std::string>.
+Write a C++ program that implements the Sieve of Eratosthenes with std::vector<bool>.
+What is the difference between std::map and std::unordered_map?
+Write a C++ function that computes matrix multiplication of two 2D vectors.
+Write a C++ program that uses std::optional to return an optional integer from a parse function.
+Write a C++ class for a simple linked list with an iterator.
+Write a C++ function that returns all pairs in a vector that sum to a given target using an unordered_set.
+Write a C++ program that prints the current time using std::chrono.
+Show how to overload operator<< for a class in C++.
+Write a C++ function to check if a binary tree is a valid binary search tree.
+Write a C++ program that implements a thread-safe queue with std::mutex and std::condition_variable.
+Write a C++ function that converts a string to lowercase.
+Write a C++ program that uses smart pointers to build a binary tree.
+Write a C++ constexpr function that computes factorials at compile time.
+Write a JavaScript function that debounces another function.
+Write a JavaScript function that deep clones an object.
+How do I fetch JSON from an API in JavaScript using async/await and handle errors?
+Write a JavaScript function that groups an array of objects by a property.
+Write a JavaScript function that returns the unique values of an array.
+Write a JavaScript class for an event emitter with on, off and emit methods.
+Write a JavaScript function that checks whether a string is a palindrome.
+Explain the difference between let, const and var in JavaScript.
+Write a Node.js script that reads a text file and prints the number of words in it.
+Write a simple Express server with a GET /hello route and a POST /echo route.
+Write a React component that shows a counter with increment and decrement buttons.
+Write a JavaScript function that sorts an array of strings case-insensitively.
+Write a JavaScript promise-based sleep function and use it in an async function.
+Write a JavaScript function that formats a number as currency with two decimal places.
+Write a JavaScript function that flattens a nested array without using Array.prototype.flat.
+Write a JavaScript function that throttles a callback to run at most once every 200 milliseconds.
+Write a TypeScript interface for a user and a function that validates it.
+Write JavaScript code that adds a click listener to every button on a page and logs its text.
+Write a JavaScript function that converts a camelCase string to snake_case.
+Write a JavaScript function that implements Array.prototype.map from scratch.
+Write a JavaScript function that computes the sum of an array using reduce.
+Write a JavaScript function that finds the longest word in a sentence.
+How do closures work in JavaScript? Show an example.
+Write a JavaScript function that retries a failing async function up to three times.
+Write a JavaScript function that checks whether two arrays contain the same elements regardless of order.
+Write a JavaScript function that validates a password has at least 8 characters, a digit and an uppercase letter.
+Write a JavaScript function that returns a Fibonacci sequence of length n.
+Write a Vue component with a text input bound to a variable using v-model.
+Write a JavaScript snippet that stores and reads an object in localStorage.
+Write a JavaScript function that implements binary search on a sorted array.
+Write a JavaScript function that shuffles an array using the Fisher-Yates algorithm.
+Write a JavaScript function that counts how many times each character appears in a string.
+Write a JavaScript function that converts a hex color string to an RGB object.
+Write a small HTML page with a form that validates an email field using JavaScript.
+Write a SQL query that returns the top 5 customers by total order amount.
+Write a SQL statement that creates a table for employees with an id, name, department and salary.
+Write a SQL query to find the second highest salary in an employees table.
+Explain the difference between INNER JOIN and LEFT JOIN with an example.
+Write a SQL query that counts the number of orders per month.
+Write a SQL query that finds duplicate email addresses in a users table.
+Write a SQL query that deletes all rows in a logs table older than 30 days.
+Write a SQL query using a window function to rank employees by salary within each department.
+Write a SQL query that returns customers who have never placed an order.
+Write a SQL query that updates the price of all products in a category by 10 percent.
+Write a SQL query that selects the average rating per product and only shows products with more than 5 reviews.
+How do I create an index on two columns in PostgreSQL and when is it useful?
+Write a SQL view that joins orders with customers and shows the customer name and order total.
+Write a SQL query that pivots monthly sales into columns using CASE expressions.
+Write a recursive SQL query (common table expression) that lists all employees under a given manager.
+Write a SQL transaction that transfers money between two accounts and rolls back on error.
+Write a SQL query that finds the department with the highest average salary.
+Write a SQL query that returns the running total of sales by date.
+What is the difference between WHERE and HAVING in SQL?
+Write a SQL query that selects rows from the last 7 days of a table with a created_at timestamp column.
+Write a SQL schema for a blog with users, posts and comments, including foreign keys.
+Write a SQL query that concatenates first and last names and sorts the result alphabetically.
+Write a SQL query that finds products whose price is above the average price.
+Write a SQL query that uses UNION to combine the names of customers and suppliers.
+Write a SQL trigger that records every update to an accounts table in an audit table.
+Write a bash script that backs up a directory into a timestamped tar.gz file.
+Write a bash one-liner that finds the 10 largest files under the current directory.
+Write a bash script that checks whether a web server is up using curl and prints a message.
+Write a bash script that loops over all .jpg files and prints their sizes.
+How do I count the number of lines in all .py files recursively using bash?
+Write a bash function that prints an error message to stderr and exits with status 1.
+Write a bash script that reads a file line by line and prints lines that contain the word error.
+Write a bash command using awk that sums the third column of a whitespace-separated file.
+Write a bash script that takes a directory as an argument and prints how many files it contains, with usage checks.
+Write a bash command that replaces all occurrences of foo with bar in every .txt file using sed.
+Explain what set -euo pipefail does in a bash script.
+Write a bash script that kills a process by name.
+Write a bash script that generates a random 16-character password.
+Write a bash script that prints the disk usage of each subdirectory sorted by size.
+Write a cron entry that runs a script every day at 3:30 AM and explain each field.
+Write a bash script with a case statement that handles start, stop and restart arguments.
+Write a bash command that lists all listening TCP ports.
+Write a bash script that renames files by adding a date prefix.
+How do I use grep to find all lines that match a regular expression and show two lines of context?
+Write a bash script that waits until a file exists and then continues.
+Write a bash script that compresses all log files older than 7 days.
+Write a bash command that extracts the unique IP addresses from an access log.
+Write a bash script that prints the numbers from 1 to 20 and marks even numbers.
+Write a bash script that parses command line options -f and -v with getopts.
+Write a Verilog module for a 4-bit synchronous counter with reset and enable.
+Write a Verilog module for a 2-to-1 multiplexer.
+Write a Verilog module for a D flip-flop with asynchronous reset.
+Write a Verilog testbench for a full adder.
+Write a Verilog module for an 8-bit shift register.
+Write a Verilog module for a 4-bit ripple carry adder using a full adder submodule.
+Write a Verilog finite state machine that detects the bit sequence 1011 on a serial input.
+Write a Verilog module that divides a 100 MHz clock down to 1 Hz.
+Write a Verilog module for a 4-to-16 decoder.
+Write a Verilog module for a simple ALU with add, subtract, and, or operations.
+Write a Verilog module for a single-port RAM with 256 words of 8 bits.
+Write a Verilog UART transmitter that sends 8N1 frames.
+Write a Verilog module for a priority encoder with 8 inputs.
+Write a Verilog module for a button debouncer.
+Write a Verilog module that generates a PWM signal with a programmable duty cycle.
+Write a Verilog module for a 16-bit linear feedback shift register.
+Write a Verilog FIFO with a depth of 16 and full and empty flags.
+Write a Verilog module that converts a 4-bit binary number to a seven-segment display code.
+Write a Verilog module for a multiply-accumulate unit with 8-bit inputs and a 24-bit accumulator.
+Explain the difference between blocking and non-blocking assignments in Verilog.
+Write a Verilog testbench with a clock generator and reset for a counter module.
+Write a Verilog module for a traffic light controller with three states.
+Write a Verilog module that implements a parameterized N-bit register with synchronous load.
+Write a Verilog module for a Gray code counter.
+Write a Verilog module for an AXI-stream register slice.
+Explain what this Python code does: def f(n): return 1 if n < 2 else n * f(n - 1)
+Explain what this code does: x = [i * i for i in range(10) if i % 2 == 0]
+What does this C code do? int f(int *a, int n) { int s = 0; for (int i = 0; i < n; i++) s += a[i]; return s; }
+Explain this JavaScript: const add = a => b => a + b; console.log(add(2)(3));
+Explain this SQL query: SELECT department, COUNT(*) FROM employees GROUP BY department HAVING COUNT(*) > 5;
+What does this bash command do? find . -name "*.log" -mtime +7 -delete
+Explain this regular expression: ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$
+Explain what this Python snippet prints:\nx = [1, 2, 3]\ny = x\ny.append(4)\nprint(x)
+Explain the following code:\nfor i in range(1, 6):\n    print('*' * i)
+Explain the following C code:\nvoid f(char *s) {\n    while (*s) { *s = toupper(*s); s++; }\n}
+Explain the following Python code:\nwith open('data.txt') as f:\n    lines = [l.strip() for l in f if l.strip()]
+Explain this JavaScript code:\nconst counts = {};\nfor (const w of words) counts[w] = (counts[w] || 0) + 1;
+What does this Verilog code do?\nalways @(posedge clk) begin\n    if (rst) q <= 0;\n    else q <= q + 1;\nend
+Explain what a Python generator is and show how this works: def gen(): yield 1; yield 2
+Explain what this C++ code does: std::vector<int> v{3,1,2}; std::sort(v.begin(), v.end(), std::greater<int>());
+Explain this Python decorator:\ndef log(f):\n    def wrapper(*a, **k):\n        print(f.__name__)\n        return f(*a, **k)\n    return wrapper
+Explain what this git command does: git rebase -i HEAD~3
+Explain what this Dockerfile does:\nFROM python:3.11-slim\nWORKDIR /app\nCOPY . .\nRUN pip install -r requirements.txt\nCMD ["python", "main.py"]
+Explain the time complexity of this code:\nfor i in range(n):\n    for j in range(i):\n        print(i, j)
+Explain how this recursive function works:\ndef power(x, n):\n    if n == 0: return 1\n    return x * power(x, n - 1)
+What is wrong with this Python code?\ndef add(a, b):\nreturn a + b
+Fix the bug in this Python function:\ndef average(nums):\n    return sum(nums) / len(nums)\nIt crashes on an empty list.
+Fix this C code, it has a buffer overflow:\nchar buf[8];\nstrcpy(buf, "hello world");
+Find the bug in this JavaScript:\nfor (var i = 0; i < 3; i++) { setTimeout(() => console.log(i), 100); }\nIt prints 3 three times instead of 0, 1, 2.
+Why does this Python code raise a TypeError?\nprint('Age: ' + 30)
+Fix this SQL query, it returns an error: SELECT name, COUNT(*) FROM users;
+This Python function is supposed to return the largest number but returns the wrong value, please fix it:\ndef largest(a):\n    m = 0\n    for x in a:\n        if x < m: m = x\n    return m
+Fix the off-by-one error in this C loop:\nfor (int i = 0; i <= n; i++) arr[i] = i;
+Why does this code print None?\ndef square(x):\n    x * x\nprint(square(4))
+Fix this bash script, it fails when filenames contain spaces:\nfor f in $(ls *.txt); do cat $f; done
+Fix the memory leak in this C code:\nchar *s = malloc(100);\nstrcpy(s, "hi");\nreturn 0;
+This Python code has an infinite loop, fix it:\ni = 0\nwhile i < 10:\n    print(i)
+Why does this JavaScript return undefined?\nfunction f() {\n  return\n  42;\n}
+Fix the null pointer dereference in this C++ code:\nint *p = nullptr;\n*p = 5;
+Fix this Python class, the counter is shared between all instances:\nclass A:\n    items = []\n    def add(self, x):\n        self.items.append(x)
+Fix this Verilog code, it infers a latch:\nalways @(*) begin\n    if (en) y = a;\nend
+Refactor this Python code to be more readable:\nr = []\nfor i in range(len(a)):\n    if a[i] > 0:\n        r.append(a[i] * 2)
+Optimize this Python function that checks for duplicates:\ndef has_dup(a):\n    for i in range(len(a)):\n        for j in range(i + 1, len(a)):\n            if a[i] == a[j]: return True\n    return False
+Add type hints and a docstring to this Python function:\ndef area(w, h):\n    return w * h
+Convert this Python function to JavaScript:\ndef greet(name):\n    return f'Hello, {name}!'
+Convert this C function to Python:\nint sum(int n) { int s = 0; for (int i = 1; i <= n; i++) s += i; return s; }
+Rewrite this JavaScript callback code with async/await:\nfetch(url).then(r => r.json()).then(d => console.log(d)).catch(e => console.error(e));
+Add error handling to this Python code:\nwith open(path) as f:\n    data = json.load(f)
+Write unit tests for this Python function:\ndef is_even(n):\n    return n % 2 == 0
+Add comments to this C function:\nint gcd(int a, int b) { while (b) { int t = b; b = a % b; a = t; } return a; }
+What does the following error mean: IndexError: list index out of range?
+What does the error "segmentation fault (core dumped)" mean and how do I debug it?
+What does "KeyError" mean in Python and how can I avoid it?
+How do I fix "ModuleNotFoundError: No module named 'numpy'"?
+What is a race condition and how can I prevent one?
+What is the difference between a process and a thread?
+Explain Big O notation with simple examples.
+What is the difference between TCP and UDP?
+What is recursion? Give an example.
+Explain what a REST API is.
+What is the difference between git merge and git rebase?
+What is Docker and why is it useful?
+Explain what a pointer is in C to a beginner.
+What is the difference between a compiler and an interpreter?
+What are the SOLID principles in object-oriented design?
+What is a hash table and how does it handle collisions?
+Explain the difference between stack and heap memory.
+What is an FPGA and how is it different from a microcontroller?
+What is the difference between synchronous and asynchronous reset in digital design?
+What is a unit test and why should I write them?
+How does HTTPS keep data secure?
+What is the capital of France and what is it famous for?
+Tell me a fun fact about octopuses.
+Give me three tips for a job interview.
+How do I make a good cup of coffee at home?
+Write a short poem about the ocean.
+Suggest a name for a small bakery and explain why it works.
+Write a polite email asking my manager for a day off next Friday.
+Summarize the plot of Romeo and Juliet in three sentences.
+What are the benefits of regular exercise?
+Explain photosynthesis in simple terms.
+What causes the seasons on Earth?
+Who was Albert Einstein and why is he famous?
+Give me a simple recipe for pancakes.
+How can I improve my public speaking skills?
+Recommend three classic science fiction novels and say why they are worth reading.
+What is the difference between weather and climate?
+Explain inflation to a ten year old.
+What should I pack for a weekend camping trip?
+Write a haiku about autumn.
+How does a refrigerator work?
+Why is the sky blue?
+Give me a five-day workout plan for a beginner.
+Explain how vaccines work.
+What are some good ways to learn a new language quickly?
+Write a short story about a robot who learns to paint, in under 150 words.
+What is the difference between a virus and a bacterium?
+How do airplanes stay in the air?
+Describe the water cycle.
+Give me five ideas for a birthday party for a seven year old.
+What is machine learning? Explain it without jargon.
+What are black holes?
+Write a product description for a reusable water bottle.
+How do I stay focused while working from home?
+What are the main causes of the French Revolution?
+Explain the rules of chess briefly.
+What is the best way to save money each month?
+Translate 'good morning, how are you?' into French, German and Italian.
+Write a thank-you note to a teacher.
+How does the internet work?
+Describe the main differences between cats and dogs as pets.
+What is the Pythagorean theorem and how is it used?
+List the planets of the solar system in order from the sun.
+Write a limerick about a programmer.
+What are the pros and cons of electric cars?
+Give me a mnemonic to remember the order of operations in math.
+How do I write a good cover letter?
+Explain what a neural network is in two paragraphs.
+Write a motivational quote and explain its meaning.
+Why do we dream?
+What is the difference between affect and effect?
+Give me a short biography of Marie Curie.
+How do you say hello in ten different languages?
+What is 17 multiplied by 23? Show your work.
+If a train travels 120 km in 1.5 hours, what is its average speed?
+Solve for x: 3x + 7 = 25.
+What is the derivative of x^3 + 2x^2 - 5x + 1?
+What is the sum of the integers from 1 to 100? Explain how to get it quickly.
+A rectangle has a perimeter of 30 cm and a length twice its width. What is its area?
+What is the probability of rolling two dice and getting a sum of 7?
+Convert 255 to binary and to hexadecimal.
+If 5 machines make 5 widgets in 5 minutes, how long do 100 machines take to make 100 widgets?
+What is the square root of 144 and the cube root of 27?
+Solve the quadratic equation x^2 - 5x + 6 = 0.
+A shirt costs $40 and is on sale for 25 percent off. What is the sale price?
+How many ways can you arrange the letters of the word LEVEL?
+What is the next number in the sequence 2, 6, 12, 20, 30?
+Simplify the fraction 84/126.
+What is 15 percent of 240?
+A bag has 3 red balls and 2 blue balls. What is the chance of drawing two red balls in a row without replacement?
+Is 91 a prime number? Explain.
+Find the area of a circle with radius 7 cm. Use pi = 3.14.
+If I invest $1000 at 5 percent annual interest compounded yearly, how much will I have after 3 years?
+John is twice as old as Mary. In 10 years the sum of their ages will be 65. How old is each now?
+What is the least common multiple of 12 and 18?
+Convert 98.6 degrees Fahrenheit to Celsius.
+Which is larger, 2^10 or 10^3? Explain.
+Three friends split a $90 bill, and one of them pays an extra $9 for a drink. How much does each pay?
+If all bloops are razzies and all razzies are lazzies, are all bloops definitely lazzies?
+There are 10 birds on a tree and a hunter shoots one. How many remain? Explain your reasoning.
+What is the sum of the interior angles of a hexagon?
+Calculate the mean, median and mode of 4, 8, 6, 5, 3, 8, 9.
+A car uses 8 liters of fuel per 100 km. How much fuel is needed for a 350 km trip?
+How many seconds are there in a day?
+Solve the system of equations: x + y = 10 and x - y = 2.
+What is the integral of 2x dx from 0 to 3?
+Explain the Monty Hall problem in simple terms.
+How many edges does a cube have?
+用Python写一个函数，判断一个数是不是质数。
+请解释一下什么是递归，并给出一个例子。
+用C语言写一个程序，输出九九乘法表。
+你好，请介绍一下你自己。
+请用中文写一首关于春天的短诗。
+什么是机器学习？请用简单的话解释。
+请写一个JavaScript函数，把数组去重。
+如何提高英语口语？给我一些建议。
+请帮我写一封请假邮件。
+北京有哪些著名的旅游景点？
+解释一下TCP和UDP的区别。
+请用Python写一个冒泡排序，并说明它的时间复杂度。
+Escribe una función en Python que invierta una cadena de texto.
+Explica qué es una variable en programación con un ejemplo sencillo.
+¿Cuál es la capital de Argentina y qué lugares se pueden visitar allí?
+Dame una receta fácil de tortilla de patatas.
+Escribe un correo formal para pedir información sobre un curso de inglés.
+¿Cómo puedo aprender a programar desde cero?
+Escribe una consulta SQL que cuente cuántos clientes hay en cada ciudad.
+Explica la diferencia entre una lista y un diccionario en Python.
+Resume en tres frases la historia de la Revolución Francesa.
+¿Qué debo hacer para dormir mejor por la noche?
+Écris une fonction Python qui calcule la somme des chiffres d'un nombre.
+Explique-moi ce qu'est une API en termes simples.
+Schreibe eine Funktion in Python, die prüft, ob ein Wort ein Palindrom ist.
+Wie funktioniert ein Elektromotor?
+Pythonで文字列を逆順にする関数を書いてください。
+Escreva uma função em JavaScript que some todos os números de um array.
+Напиши функцию на Python, которая считает количество слов в строке.
+Write a Python function that parses a command line like 'cmd --flag value' into a dictionary.
+Write a Python function that walks a directory tree and returns the total size in bytes of all files.
+Write a Python class that wraps a REST API with get and post methods using requests and handles timeouts.
+Write a small Python tokenizer for arithmetic expressions with numbers, plus, minus, times, divide and parentheses.
+Write a recursive descent parser in Python that evaluates arithmetic expressions.
+Write a Python function that simulates Conway's Game of Life for one generation on a small grid.
+Write a Python function that solves the N-Queens problem for n = 6.
+Write a Python function that validates a Sudoku board.
+Write a Python function that implements a trie with insert and search.
+Write a Python script that plots a sine wave with matplotlib.
+Write a Python function that implements a simple moving average over a list of numbers.
+Write a Python function to compute the dot product of two vectors and the cosine similarity.
+Write a Python function that converts seconds into a string like 1h 02m 03s.
+Write a Python script that uses a thread pool to compute squares of numbers from 1 to 20.
+Write a short Python program that implements tic-tac-toe for two players in the terminal.
+Write a Python function that validates that a string is valid JSON without using the json module.
+Write a Python function that computes the edit distance between two lists of words.
+Write a C function that parses a string such as 192.168.0.1 into four bytes.
+Write a C program that implements a simple tokenizer for a command line, splitting on spaces.
+Write a C program that prints the size of each basic data type using sizeof.
+Write a C function that computes CRC-32 of a buffer.
+Write a C program that multiplies two matrices read from the user.
+Write a C implementation of a simple ring buffer for UART bytes with put and get functions.
+Write a C function to convert an integer to a string in a given base between 2 and 16.
+Write a Makefile for a small C project with main.c and util.c that builds a program called app.
+Write a CMakeLists.txt for a C++17 project with one executable and one library.
+Write a Dockerfile for a Node.js application that runs on port 3000.
+Write a GitHub Actions workflow that runs pytest on every push.
+Write a regular expression that matches US phone numbers like (555) 123-4567 and explain it.
+Write a YAML configuration for a simple Kubernetes deployment with two replicas of nginx.
+Write a JSON schema for an object with a required string name and an optional integer age.
+Write a .gitignore file for a Python project.
+Write a CSS rule that centers a div horizontally and vertically using flexbox.
+Write an HTML page with a table of three rows and two columns and some basic CSS styling.
+Write a Rust function that returns the sum of a vector of integers.
+Write a Go function that reverses a slice of integers.
+Write a Java class with a main method that prints the numbers 1 to 10.
+Write a Java method that checks whether a string is a palindrome.
+Write a Rust program that reads a line from standard input and prints it in uppercase.
+Write a Go program that starts an HTTP server returning hello world on port 8080.
+Write a TypeScript function that takes an array of numbers and returns an object with min, max and average.
+Write a PHP script that connects to a MySQL database and prints all rows of a table.
+Write a Kotlin function that filters a list of strings by length.
+Write a Swift function that returns the factorial of an integer.
+Write a MATLAB script that plots y = x^2 for x from -5 to 5.
+Write a PowerShell command that lists all running processes using more than 100 MB of memory.
+Write a VHDL entity and architecture for a 2-input AND gate.
+Write a Python script that generates a random maze and prints it using ASCII characters.
+Write an assembly language program for x86 that adds two numbers and prints the result.
+Describe how a CPU executes an instruction, from fetch to write back.
+Explain what pipelining is in a processor.
+What is quantization in neural networks and why does it save memory?
+Explain how a transformer language model generates the next token.
+What is an attention head in a transformer?
+What is the difference between int8 and int4 quantization?
+Why is memory bandwidth the bottleneck for running large language models on small devices?
+Explain what an AXI bus is in an FPGA design.
+What is high-level synthesis and when should I use it?
+What is the difference between a LUT and a flip-flop in an FPGA?
+Explain the difference between combinational and sequential logic.
+How does DDR memory work, in simple terms?
+Explain what a clock domain crossing is and how to handle it safely.
+Give me an example of a state machine in Python that models a vending machine.
+Write a Python function that computes the SHA-256 hash of a file using hashlib.
+Write a Python script that sends an email with smtplib.
+Write a Python function that converts a list of integers to a comma separated string.
+Write a Python program that reads a text file and prints each line number and line.
+How do I install Python packages with pip and create a virtual environment?
+What is the difference between == and is in Python?
+What are Python's *args and **kwargs and how do I use them?
+What is the difference between deep copy and shallow copy?
+What is a lambda function in Python? Give two examples.
+How does exception handling work in Python with try, except, else and finally?
+Explain how inheritance works in Python with a small example.
+What does the if __name__ == '__main__' idiom mean?
+What is the difference between a shell script and a Python script?
+What are the best practices for naming variables?
+How should I structure a small Python project with tests?
+What is the difference between SQL and NoSQL databases?
+How does a binary search tree differ from a heap?
+Explain dynamic programming using the knapsack problem.
+How do I choose between a list, a set and a dictionary in Python?
+Can you explain what a closure is with a Python example?
+Write a short README for a command line tool that converts temperatures between Celsius and Fahrenheit.
+Write a commit message for a change that fixes a null pointer crash in the config parser.
+Write a docstring for a function that merges two sorted lists.
+Review this function and suggest improvements:\ndef f(x):\n    if x == True:\n        return True\n    else:\n        return False
+Give me a checklist for reviewing a pull request.
+Write a short function that returns the day of the year for a given date without using libraries.
+Write a function that converts a snake_case string to CamelCase in Python and in JavaScript.

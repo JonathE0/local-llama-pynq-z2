@@ -1,6 +1,7 @@
 # local-llama-pynq-z2
 
-Small Llama-architecture LLMs (llama2.c TinyStories) running on a PYNQ-Z2, with matmul on the FPGA. Plan and design decisions: [NOTES.md](NOTES.md).
+Small LLMs running on a PYNQ-Z2 (Zynq-7020) with every matmul on an FPGA kernel: llama2.c TinyStories models
+(stories110M at 7.9 tok/s) and Qwen2.5-Coder-0.5B-Instruct at 4-bit (3.7 tok/s), optionally shown on a 16×2 LCD. Plan and design decisions: [NOTES.md](NOTES.md).
 
 ## Phase 1: CPU baseline (llama2.c `runq`, int8)
 
@@ -85,10 +86,60 @@ Results (2026-10-26, kernel at 142.86 MHz, `-t 0 -n 256`, same prompt as phase 1
 - stories110M now reads ~920 MB/s of weights, ~80% of what one 64-bit port can move at 142.86 MHz. The next lever is
   a second weight port (HP2), toward the DDR's ~1.5 GB/s practical limit.
 
-## Phase 3: Qwen2.5-Coder-0.5B-Instruct (in progress)
+## Phase 3: Qwen2.5-Coder-0.5B-Instruct
 
-Done so far, all on the PC: model choice, 4-bit quantization, output-head token set, and the board weight file.
-Still to do: a bigger CMA pool on the board, a 4-bit kernel, Qwen inference code in C, and the tokenizer.
+A 4-bit coding chat model runs on the board with every matmul on the FPGA:
+
+| Run (2026-10-26, greedy, 128 new tokens, prompt "Write a Python function that checks if a number is prime.") | Prompt | Generation |
+|---|---|---|
+| ARM CPU only, 2 threads (`qwen`) | 1.3 tok/s | 2.0 tok/s |
+| FPGA, 1 thread (`qwen-fpga`) | 3.9 tok/s | 3.5 tok/s |
+| **FPGA, 2 threads** | **3.9 tok/s** | **3.7 tok/s** |
+
+- `FPGA_CHECK=1`: max abs difference 2.4e-4 against the CPU over 9,216 matmuls (the kernel sums groups in a different order).
+- [tools/qwen_ref.py](tools/qwen_ref.py), a numpy forward pass over the same `.qwb`, matches llama.cpp's greedy output on the GGUF once
+  the head restriction and fp16-vs-fp32 activation scales are accounted for; the C program matches it within int8
+  activation noise (greedy identical for 40–64 tokens).
+- The kernel streams ~263 MB of weights per token (201 MB 4-bit layers + 62 MB 8-bit head), ~0.95 GB/s.
+
+Deploy, build, load the overlay (once per boot) and run, from the PC:
+
+```bash
+ssh pynq mkdir -p qwen/driver qwen/hls4 qwen/qwen qwen/overlay qwen/models
+scp driver/* pynq:qwen/driver/ && scp hls4/xmatvec4_hw.h pynq:qwen/hls4/ && scp qwen/*.c qwen/*.h qwen/Makefile pynq:qwen/qwen/
+scp overlay/qwen.bit overlay/qwen.hwh overlay/load_overlay.py pynq:qwen/overlay/
+scp models/qwen/qwen2.5-coder-0.5b-q4-head64k.qwb models/qwen/qwen_tokenizer.bin pynq:qwen/models/
+ssh pynq 'cd ~/qwen/qwen && make'
+ssh pynq 'sudo bash -c "for f in /etc/profile.d/*.sh; do . \$f; done; python3 /home/xilinx/qwen/overlay/load_overlay.py qwen"'
+ssh pynq 'cd ~/qwen && sudo ./qwen/qwen-fpga models/qwen2.5-coder-0.5b-q4-head64k.qwb -i "Write a C function that reverses a string"'
+```
+
+Options: `-t` temperature (default 0.7, 0 = greedy), `-p` top-p (0.8), `-n` max new tokens (256), `-c` context
+(1024), `-s` seed, `-m raw` (no chat template), `--lcd 1` (mirror the answer on the LCD), `FPGA_CHECK=1` (slow).
+Build on the board with `make` in `qwen/` (`qwen` = CPU only, `qwen-fpga`).
+
+| Piece | Files |
+|---|---|
+| 4-bit kernel: int4 or int8 weights, fp16 scales, 16 MACs/clock, II=1, 150 MHz timing | [hls4/](hls4/) (contract in `matvec4.h`) |
+| Overlay: kernel on HP0/HP1 + LCD GPIO | `overlay/qwen.bit`, built with `vivado/build_overlay.tcl ... --vlnv xilinx.com:hls:matvec4 --name qwen --lcd` |
+| Inference (Qwen2: QKV biases, NeoX RoPE θ=1e6, GQA 14/2, SwiGLU, head over `head_ids`) | [qwen/qwen.c](qwen/qwen.c), FPGA calls in [driver/](driver/) (`-DMATVEC4`) |
+| Byte-level BPE tokenizer, id-for-id with HF `tokenizers` (1.18M test cases) | [qwen/tokenizer.c](qwen/tokenizer.c), data from `tools/qwen_tok_export.py`, tests `tools/qwen_tok_test.py` |
+| 1602A LCD (line 1: scrolling answer, line 2: tok/s) | [qwen/lcd.c](qwen/lcd.c), pins in [vivado/lcd_pins.xdc](vivado/lcd_pins.xdc) |
+
+The CMA pool is 320 MB (`/boot/uEnv.txt` with `cma=320M` in `bootargs`; delete that file from the SD card's boot
+partition to undo). The weights take 263 MB of it in 8 MiB chunks.
+
+### LCD wiring (1602A, 4-bit mode, PYNQ-Z2 Raspberry Pi header)
+
+| LCD pin | Pi header pin |
+|---|---|
+| 1 VSS, 5 RW, 16 K | GND (6, 14) — RW must be on GND so the 5 V LCD never drives the 3.3 V FPGA pins |
+| 2 VDD, 15 A | 5 V (2, 4) |
+| 3 V0 | 10 kΩ pot wiper between 5 V and GND (or ~1 kΩ to GND) |
+| 4 RS, 6 E | 11, 13 |
+| 11–14 D4–D7 | 15, 16, 18, 22 |
+
+### How the model was prepared (PC)
 
 **Quality** (llama-perplexity, context 512, lower is better; code = held-out Python stdlib, English = wikitext-2):
 
@@ -104,12 +155,21 @@ Still to do: a bigger CMA pool on the board, a 4-bit kernel, Qwen inference code
 - The official GGUFs store the tied head twice (`output.weight` = `token_embd.weight`); `tools/gguf_tie.py` drops the
   copy and `tools/imatrix_tie.py` moves its imatrix stats to `token_embd`.
 
-**Output head:** logits only for the 49,152 most frequent tokens (plus all special and byte tokens; the exact set is
-[qwen/head_tokens_49152.npy](qwen/head_tokens_49152.npy), made by `tools/qwen_head_tokens.py 49152`), covering 99.1% of
-held-out English, 98.8% of Python and 97.9% of C tokens (32,768 would cover 97.2 / 97.3 / 95.6%). Per token the board
-reads ~201 MB of 4-bit layer weights plus ~47 MB of head, so ~250 MB must fit in CMA.
+**Output head:** logits only for 65,536 tokens (plus all special and byte tokens), ranked mostly by how often the model
+itself emits them: 1,542 answers (401k tokens) generated with llama.cpp from the 514 prompts in
+[tools/qwen_head_prompts.txt](tools/qwen_head_prompts.txt) (`tools/qwen_head_gen.py`), then English/Python/C text.
+The set is [qwen/head_tokens_65536.npy](qwen/head_tokens_65536.npy) (`tools/qwen_head_tokens.py 65536`).
 
-**Board weight file** (`.qwb`, 375 MiB; layout in [tools/gguf2qwb.py](tools/gguf2qwb.py)): 4-bit matrices as packed
+| Head set | Held-out model answers | English | Python | C |
+|---|---|---|---|---|
+| 49,152 from text frequencies only (first try) | 94.8% | 99.1% | 98.8% | 97.9% |
+| 49,152 with model answers | 98.1% | 98.9% | 98.6% | 97.8% |
+| **65,536 with model answers** | **99.0%** | 99.7% | 99.4% | 98.6% |
+
+The first set lacked `` ``` ``, `_prime` and `Certainly`, so code fences lost their language and names came out as
+`is prime`. What 65,536 still misses is rare identifier pieces and a few foreign-language word pieces.
+
+**Board weight file** (`.qwb`, 390 MiB; layout in [tools/gguf2qwb.py](tools/gguf2qwb.py)): 4-bit matrices as packed
 int4 + fp16 scales, the head and full embedding table at int8 + fp16 scales. `tools/qwb_check.py` walks the file the
 way the board loader must and checks it against the GGUF.
 
@@ -122,7 +182,7 @@ vendor/llama.cpp/llama-imatrix -m models/qwen/qwen2.5-coder-0.5b-instruct-fp16.g
 .venv/Scripts/python tools/gguf_tie.py models/qwen/qwen2.5-coder-0.5b-instruct-fp16.gguf models/qwen/coder-fp16-tied.gguf
 .venv/Scripts/python tools/imatrix_tie.py models/qwen/imatrix-coder.gguf models/qwen/imatrix-coder-tied.gguf
 vendor/llama.cpp/llama-quantize --pure --imatrix models/qwen/imatrix-coder-tied.gguf --token-embedding-type q8_0 models/qwen/coder-fp16-tied.gguf models/qwen/coder-q4.gguf Q4_0
-.venv/Scripts/python tools/gguf2qwb.py models/qwen/coder-q4.gguf qwen/head_tokens_49152.npy models/qwen/coder-q4.qwb
+.venv/Scripts/python tools/gguf2qwb.py models/qwen/coder-q4.gguf qwen/head_tokens_65536.npy models/qwen/coder-q4.qwb
 .venv/Scripts/python tools/qwb_check.py models/qwen/coder-q4.gguf models/qwen/coder-q4.qwb
 ```
 

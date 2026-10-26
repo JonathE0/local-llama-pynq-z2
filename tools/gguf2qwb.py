@@ -1,6 +1,6 @@
 """Export a Qwen2 GGUF (Q4_0 matrices, Q4_0 or Q8_0 tied embedding) to the board's .qwb weight file.
 
-usage: python tools/gguf2qwb.py model.gguf models/qwen/head_tokens_32768.npy out.qwb
+usage: python tools/gguf2qwb.py model.gguf qwen/head_tokens_65536.npy out.qwb
 
 Layout (little-endian, every array padded to 64 bytes):
   header, 256 bytes: "QWB1", version 1, then int32 dim, hidden_dim, n_layers, n_heads, n_kv_heads, vocab_size,

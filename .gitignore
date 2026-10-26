@@ -3,6 +3,7 @@ models/
 vendor/
 .venv/
 hls/build/
+hls4/build/
 vivado/build/
 .Xil/
 *.jou

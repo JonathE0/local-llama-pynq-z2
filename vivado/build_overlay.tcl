@@ -4,13 +4,18 @@
 #   vivado -mode batch -source vivado/build_overlay.tcl -tclargs --no-ip
 #
 # <ip_repo_dir> : folder with the exported HLS IP (the one containing component.xml, normally
-#                 <hls project>/<solution>/impl/ip). Must provide xilinx.com:hls:matvec.
+#                 <hls project>/<solution>/impl/ip). Must provide the --vlnv IP.
 # --jobs N      : parallel synthesis/implementation jobs (default 4)
 # --bd-only     : build + validate + generate the wrapper, stop before synthesis (nothing copied to overlay/)
 # --no-ip       : PS7 + reset only, validate and stop (checks the Vivado setup without the IP); implies --bd-only
+# --vlnv V      : kernel IP as vendor:library:name, newest version is used (default xilinx.com:hls:matvec)
+# --inst I      : kernel instance name (default <name>_0 of the IP, e.g. matvec_0)
+# --name B      : block design, project and output name: overlay/B.bit + overlay/B.hwh (default matvec)
+# --lcd         : also add a 6-bit output AXI GPIO for the 1602A LCD at 0x41200000, pins in vivado/lcd_pins.xdc
+# Qwen overlay: -tclargs hls4/build/matvec4_prj/sol/impl/ip --vlnv xilinx.com:hls:matvec4 --name qwen --lcd
 #
 # Design (everything on FCLK_CLK0):
-#   PS7 M_AXI_GP0 -> smartconnect -> matvec_0/s_axi_control   @ 0x43C00000, 64K
+#   PS7 M_AXI_GP0 -> smartconnect -> matvec_0/s_axi_control   @ 0x43C00000, 64K   (matvec_0 = --inst)
 #   matvec_0/m_axi_gmem0 -> smartconnect -> PS7 S_AXI_HP0     DDR 512M @ 0x0
 #   matvec_0/m_axi_gmem1 -> smartconnect -> PS7 S_AXI_HP1     DDR 512M @ 0x0
 # The interface names above are the ones Vitis HLS generates for the bundles in hls/matvec.h; if the kernel's
@@ -18,6 +23,8 @@
 
 set part     xc7z020clg400-1
 set bd_name  matvec
+set ip_vlnv  xilinx.com:hls:matvec
+set inst     ""
 set ctrl_base 0x43C00000
 set ctrl_range 64K
 set ddr_range  512M
@@ -31,6 +38,7 @@ set out_dir    [file join $root overlay]
 set jobs 4
 set bd_only 0
 set no_ip 0
+set lcd 0
 set ip_repo ""
 for {set i 0} {$i < [llength $argv]} {incr i} {
     set a [lindex $argv $i]
@@ -38,12 +46,17 @@ for {set i 0} {$i < [llength $argv]} {incr i} {
         --jobs    { incr i; set jobs [lindex $argv $i] }
         --bd-only { set bd_only 1 }
         --no-ip   { set no_ip 1; set bd_only 1 }
+        --vlnv    { incr i; set ip_vlnv [lindex $argv $i] }
+        --inst    { incr i; set inst [lindex $argv $i] }
+        --name    { incr i; set bd_name [lindex $argv $i] }
+        --lcd     { set lcd 1 }
         default   { set ip_repo [file normalize $a] }
     }
 }
 if {![string is integer -strict $jobs] || $jobs < 1} { error "--jobs needs a positive integer" }
+if {$inst eq ""} { set inst [lindex [split $ip_vlnv :] 2]_0 }
 if {!$no_ip && ![file isdirectory $ip_repo]} {
-    error "usage: vivado -mode batch -source vivado/build_overlay.tcl -tclargs <ip_repo_dir> \[--jobs N\] \[--bd-only\]  (or --no-ip)"
+    error "usage: vivado -mode batch -source vivado/build_overlay.tcl -tclargs <ip_repo_dir> \[--jobs N\] \[--bd-only\] \[--vlnv V\] \[--inst I\] \[--name B\]  (or --no-ip)"
 }
 
 # ---- project ----
@@ -51,8 +64,8 @@ create_project -force $bd_name $proj_dir -part $part
 if {!$no_ip} {
     set_property ip_repo_paths $ip_repo [current_project]
     update_ip_catalog -rebuild
-    set kernel_vlnv [lindex [lsort -dictionary [get_ipdefs -all xilinx.com:hls:matvec:*]] end]
-    if {$kernel_vlnv eq ""} { error "no xilinx.com:hls:matvec IP found under $ip_repo (point at the folder containing component.xml)" }
+    set kernel_vlnv [lindex [lsort -dictionary [get_ipdefs -all $ip_vlnv:*]] end]
+    if {$kernel_vlnv eq ""} { error "no $ip_vlnv IP found under $ip_repo (point at the folder containing component.xml)" }
     puts "INFO: kernel IP $kernel_vlnv from $ip_repo"
 }
 
@@ -78,10 +91,10 @@ set clk_pins [list $ps/M_AXI_GP0_ACLK $ps/S_AXI_HP0_ACLK $ps/S_AXI_HP1_ACLK]
 set rst_pins {}
 
 if {!$no_ip} {
-    set k [create_bd_cell -type ip -vlnv $kernel_vlnv matvec_0]
+    set k [create_bd_cell -type ip -vlnv $kernel_vlnv $inst]
     foreach p {s_axi_control m_axi_gmem0 m_axi_gmem1} {
         if {[get_bd_intf_pins -quiet $k/$p] eq ""} {
-            error "matvec_0 has no interface '$p'; it has: [get_bd_intf_pins -of_objects $k]"
+            error "$inst has no interface '$p'; it has: [get_bd_intf_pins -of_objects $k]"
         }
     }
     lappend clk_pins $k/ap_clk
@@ -99,6 +112,19 @@ if {!$no_ip} {
         lappend clk_pins $c/aclk
         lappend rst_pins $c/aresetn
     }
+
+    if {$lcd} {
+        # second control-path slave: GPIO bit 0 RS, 1 E, 2..5 D4..D7 of the LCD (qwen/lcd.c)
+        set_property CONFIG.NUM_MI 2 [get_bd_cells smc_ctrl]
+        set g [create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio lcd_gpio]
+        set_property -dict [list CONFIG.C_GPIO_WIDTH 6 CONFIG.C_ALL_OUTPUTS 1] $g
+        connect_bd_intf_net [get_bd_intf_pins smc_ctrl/M01_AXI] [get_bd_intf_pins $g/S_AXI]
+        create_bd_port -dir O -from 5 -to 0 lcd
+        connect_bd_net [get_bd_pins $g/gpio_io_o] [get_bd_ports lcd]
+        lappend clk_pins $g/s_axi_aclk
+        lappend rst_pins $g/s_axi_aresetn
+        add_files -fileset constrs_1 [file join $script_dir lcd_pins.xdc]
+    }
 }
 
 foreach p $clk_pins { connect_bd_net [get_bd_pins $ps/FCLK_CLK0] [get_bd_pins $p] }
@@ -107,6 +133,10 @@ foreach p $rst_pins { connect_bd_net [get_bd_pins $rst/peripheral_aresetn] [get_
 if {!$no_ip} {
     assign_bd_address -target_address_space [get_bd_addr_spaces $ps/Data] \
         -offset $ctrl_base -range $ctrl_range [get_bd_addr_segs $k/s_axi_control/Reg]
+    if {$lcd} {
+        assign_bd_address -target_address_space [get_bd_addr_spaces $ps/Data] \
+            -offset 0x41200000 -range 64K [get_bd_addr_segs lcd_gpio/S_AXI/Reg]
+    }
     foreach g {gmem0 gmem1} hp {HP0 HP1} {
         assign_bd_address -target_address_space [get_bd_addr_spaces $k/Data_m_axi_$g] \
             -offset 0x0 -range $ddr_range [get_bd_addr_segs $ps/S_AXI_$hp/${hp}_DDR_LOWOCM]

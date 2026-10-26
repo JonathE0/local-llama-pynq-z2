@@ -1,4 +1,5 @@
-// Board driver for the HLS matvec kernel (contract: hls/matvec.h). C API on top of XRT + /dev/mem.
+// Board driver for the HLS matvec kernels (contracts: hls/matvec.h; hls4/matvec4.h when matvec_fpga.cpp is built
+// with -DMATVEC4 -I../hls4). C API on top of XRT + /dev/mem.
 // The overlay must already be loaded (e.g. with pynq). Needs root for /dev/mem and /dev/dri.
 #pragma once
 #include <stddef.h>
@@ -23,6 +24,10 @@ void *fpga_alloc_try(size_t bytes, uint64_t *phys);
 // Run one matvec (semantics in hls/matvec.h) and wait for it to finish. Arguments are physical addresses.
 // Returns 0, or -1 with a message on stderr (bad arguments, or the kernel did not finish).
 int fpga_matvec(uint64_t wq, uint64_t ws, uint64_t xq, uint64_t xs, uint64_t out, int n, int d, int gs);
+
+// -DMATVEC4 build only (instead of fpga_matvec): one matvec4 (semantics in hls4/matvec4.h), waits for it.
+// Physical addresses, each 64-byte aligned; wbits 4 or 8. Returns 0, or -1 with a message on stderr.
+int fpga_matvec4(uint64_t w, uint64_t ws, uint64_t xq, uint64_t xs, uint64_t out, int n, int d, int wbits);
 
 // Unmap the registers and free all buffers.
 void fpga_close(void);
