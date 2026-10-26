@@ -11,9 +11,8 @@ tok/s ≈ bandwidth / bytes of weights read per token.
    Attention, softmax, RMSNorm and sampling stay on the ARM. Target for stories110M: 6–8 tok/s (ceiling ~10).
 3. **Qwen2.5-0.5B-Instruct** at 4-bit (or a newer small model; pick after comparing perplexity on the PC).
 
-Phase 1 is done: steps and results in [README.md](README.md) (stories15M 18.5 tok/s, stories110M 3.2 tok/s).
-Phase 2 deliverables (not started): one HLS kernel source, one C-sim testbench checking the kernel against
-the CPU result, a small C driver called from `runq.c`, README steps for Vivado and loading the bitstream.
+Phases 1 and 2 are done; steps and results in [README.md](README.md). stories110M: 3.2 tok/s on the CPU,
+7.9 tok/s with matmul on the FPGA (kernel at 142.86 MHz, ~80% of one HP port).
 
 ## Decisions
 - Phase 3 format: llama.cpp `Q4_0` (symmetric 4-bit, group 32, fp16 scale), quantized with
@@ -32,3 +31,6 @@ the CPU result, a small C driver called from `runq.c`, README steps for Vivado a
 - Board is cabled to the HP ENVY laptop; access details in [README.md](README.md#board-access).
 - Vivado 2025.2 + Vitis are installed on the laptop (`C:\AMDDesignTools\2025.2`).
 - Board clock is wrong (no internet, no NTP); harmless so far.
+- PYNQ 3.1.1 allocates FPGA buffers through XRT/zocl from a 128 MiB CMA pool (phys 0x15900000–0x1D900000).
+  stories110M's weights (~116 MB, packed into 8 MiB chunks) only just fit; Qwen (~220 MB) needs a bigger pool
+  via a `cma=` boot arg first.

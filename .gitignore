@@ -1,2 +1,8 @@
 llama2.c/
 models/
+hls/build/
+vivado/build/
+.Xil/
+*.jou
+*.log
+dfx_runtime.txt
